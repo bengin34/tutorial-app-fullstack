@@ -1,41 +1,23 @@
-import { FaEdit } from "react-icons/fa";
-import { AiFillDelete } from "react-icons/ai";
-import axios from "axios";
-import EditTutorial from "./EditTutorial";
-// const tutorials = [
-//   {
-//     id: 1,
-//     title: "JS",
-//     description: "JS is a programming language",
-//   },
-//   {
-//     id: 2,
-//     title: "React",
-//     description: "JS library for UI design",
-//   },
-// ]
+import { FaEdit } from "react-icons/fa"
+import { AiFillDelete } from "react-icons/ai"
+import axios from "axios"
+import EditTutorial from "./EditTutorial"
+import { useState } from "react"
+
 
 const TutorialList = ({ tutorials, getTutorials }) => {
+  const [editItem, setEditItem] = useState("");
+
   const deleteTutorial = async (id) => {
-    const BASE_URL = "http://127.0.0.1:8000/tutorials/";
-
+    const BASE_URL = "http://127.0.0.1:8000/tutorials";
     try {
-      await axios.delete(`${BASE_URL}/${id}/`);
+      await axios.delete(`${BASE_URL}/${id}/`)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-    getTutorials();
-  };
+    getTutorials()
+  }
 
-  const editTutorial = async ({ id, title, description }) => {
-    const BASE_URL = "http://127.0.0.1:8000/tutorials/";
-
-    try {
-      await axios.put(`${BASE_URL}/${id}/`, { title, description });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="container mt-4">
@@ -53,7 +35,6 @@ const TutorialList = ({ tutorials, getTutorials }) => {
         <tbody>
           {tutorials?.map((item) => {
             const { id, title, description } = item;
-
             return (
               <tr key={id}>
                 <th>{id}</th>
@@ -66,18 +47,12 @@ const TutorialList = ({ tutorials, getTutorials }) => {
                     className="me-2 text-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#edit-tutor"
-                    onClick={() =>
-                      editTutorial({
-                        id: "502",
-                        title: "DENEME",
-                        description: "REACT",
-                      })
-                    }
+                    onClick={() => setEditItem(item)}
                   />
                   <AiFillDelete
                     size={22}
                     type="button"
-                    className="text-danger "
+                    className="text-danger"
                     onClick={() => deleteTutorial(id)}
                   />
                 </td>
@@ -86,9 +61,10 @@ const TutorialList = ({ tutorials, getTutorials }) => {
           })}
         </tbody>
       </table>
-      <EditTutorial />
+
+      <EditTutorial editItem={editItem} getTutorials={getTutorials} />
     </div>
   );
-};
+}
 
-export default TutorialList;
+export default TutorialList
