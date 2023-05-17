@@ -17,7 +17,7 @@ import EditTutorial from "./EditTutorial";
 
 const TutorialList = ({ tutorials, getTutorials }) => {
   const deleteTutorial = async (id) => {
-    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials";
+    const BASE_URL = "http://127.0.0.1:8000/tutorials/";
 
     try {
       await axios.delete(`${BASE_URL}/${id}/`);
@@ -28,7 +28,7 @@ const TutorialList = ({ tutorials, getTutorials }) => {
   };
 
   const editTutorial = async ({ id, title, description }) => {
-    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials";
+    const BASE_URL = "http://127.0.0.1:8000/tutorials/";
 
     try {
       await axios.put(`${BASE_URL}/${id}/`, { title, description });
